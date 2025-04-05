@@ -1,105 +1,117 @@
-'use client';
-import { useSystemStore } from '../store/useSystemStore';
+"use client";
 
-
-const technologies = {
-  languages: {
-    Java: ['Spring Boot', 'JPA', 'Hibernate'],
-    NodeJS: ['NestJS', 'Express', 'Prisma'],
-    PHP: ['Laravel', 'CodeIgniter', 'Yii'],
-    Python: ['Django', 'Flask', 'SQLAlchemy']
-  },
-  orm: {
-    Java: ['JPA', 'Hibernate'],
-    NodeJS: ['Prisma'],
-    PHP: ['Eloquent'],
-    Python: ['SQLAlchemy']
-  },
-  realtime: ['WebSockets', 'Redis', 'RabbitMQ', 'Kafka']
-};
+import { useSystemStore } from "../../app/store/useSystemStore";
+import { Card, CardContent } from "../components/ui/card";
 
 export default function MonteSeuSistema() {
-  const { systemType, persistence, realtime, language, framework, orm, setSystemType, setPersistence, setRealtime, setLanguage } = useSystemStore();
+  const {
+    systemType,
+    persistence,
+    realtime,
+    language,
+    framework,
+    orm,
+    setSystemType,
+    setPersistence,
+    setRealtime,
+    setLanguage,
+    setFramework,
+    setOrm,
+  } = useSystemStore();
 
-  // Lida com a mudança de seleção de linguagem
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const lang = e.target.value as keyof typeof technologies.languages; // Garantir que 'lang' seja uma chave válida
-    setLanguage(lang);
+    const selected = e.target.value;
+    setLanguage(selected as "Java" | "NodeJS" | "PHP" | "Python");
+    // Exemplo de regras de stack:
+    if (selected === "Node.js") {
+      setFramework("NestJS");
+      setOrm("Prisma");
+    } else if (selected === "Java") {
+      setFramework("Spring Boot");
+      setOrm("Hibernate");
+    } else if (selected === "Python") {
+      setFramework("FastAPI");
+      setOrm("SQLAlchemy");
+    }
   };
 
   return (
-    <div className="p-5 max-w-lg mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Monte seu Sistema</h1>
-      
-      <label className="block mb-2">Qual o tipo do sistema?</label>
-      <select className="border p-2 w-full mb-4" onChange={(e) => setSystemType(e.target.value)}>
-        <option value="">Selecione</option>
-        <option value="mobile">Aplicativo Mobile</option>
-        <option value="web">Web</option>
-        <option value="pwa">PWA</option>
-        <option value="backend">Backend/API</option>
-      </select>
-      
-      {systemType && (
-        <>
-          <label className="block mb-2">O sistema precisa de persistência de dados?</label>
-          <select className="border p-2 w-full mb-4" onChange={(e) => setPersistence(e.target.value)}>
+    <div className="space-y-4 max-w-2xl mx-auto p-4">
+      <h1 className="text-xl font-bold text-center">Monte Seu Sistema</h1>
+
+      <Card>
+        <CardContent className="space-y-2 p-4">
+          <label className="block font-semibold">Tipo de Sistema</label>
+          <select
+            className="w-full border p-2 rounded"
+            value={systemType ?? ""}
+            onChange={(e) => setSystemType(e.target.value)}
+          >
             <option value="">Selecione</option>
-            <option value="yes">Sim</option>
-            <option value="no">Não</option>
+            <option value="Web">Web</option>
+            <option value="Mobile">Mobile</option>
+            <option value="Desktop">Desktop</option>
+            <option value="API">API</option>
           </select>
-        </>
-      )}
-      
-      {persistence === "yes" && (
-        <>
-          <label className="block mb-2">Escolha uma Linguagem:</label>
-          <select className="border p-2 w-full mb-4" onChange={handleLanguageChange}>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent className="space-y-2 p-4">
+          <label className="block font-semibold">Persistência</label>
+          <select
+            className="w-full border p-2 rounded"
+            value={persistence ?? ""}
+            onChange={(e) => setPersistence(e.target.value)}
+          >
             <option value="">Selecione</option>
-            {Object.keys(technologies.languages).map((lang) => (
-              <option key={lang} value={lang}>{lang}</option>
-            ))}
+            <option value="SQL">SQL</option>
+            <option value="NoSQL">NoSQL</option>
+            <option value="Ambos">Ambos</option>
           </select>
-        </>
-      )}
-      
-      {language && (
-        <>
-          <label className="block mb-2">Frameworks Disponíveis:</label>
-          <ul className="mb-4">
-            {framework.map((fw) => (
-              <li key={fw} className="border p-2 mb-2">{fw}</li>
-            ))}
-          </ul>
-          <label className="block mb-2">ORM Disponíveis:</label>
-          <ul>
-            {orm.map((o) => (
-              <li key={o} className="border p-2 mb-2">{o}</li>
-            ))}
-          </ul>
-        </>
-      )}
-      
-      {systemType && (
-        <>
-          <label className="block mb-2">O sistema precisa de comunicação em tempo real?</label>
-          <select className="border p-2 w-full mb-4" onChange={(e) => setRealtime(e.target.value)}>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent className="space-y-2 p-4">
+          <label className="block font-semibold">Atualização em tempo real?</label>
+          <select
+            className="w-full border p-2 rounded"
+            value={realtime ?? ""}
+            onChange={(e) => setRealtime(e.target.value)}
+          >
             <option value="">Selecione</option>
-            <option value="yes">Sim</option>
-            <option value="no">Não</option>
+            <option value="Sim">Sim</option>
+            <option value="Não">Não</option>
           </select>
-        </>
-      )}
-      
-      {realtime === "yes" && (
-        <>
-          <label className="block mb-2">Tecnologias de Comunicação em Tempo Real Disponíveis:</label>
-          <ul>
-            {technologies.realtime.map((tech) => (
-              <li key={tech} className="border p-2 mb-2">{tech}</li>
-            ))}
-          </ul>
-        </>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardContent className="space-y-2 p-4">
+          <label className="block font-semibold">Linguagem</label>
+          <select
+            className="w-full border p-2 rounded"
+            value={language ?? ""}
+            onChange={handleLanguageChange}
+          >
+            <option value="">Selecione</option>
+            <option value="Node.js">Node.js</option>
+            <option value="Java">Java</option>
+            <option value="Python">Python</option>
+            <option value="PHP">PHP</option>
+            <option value="Rust">Rust</option>
+          </select>
+        </CardContent>
+      </Card>
+
+      {framework && (
+        <Card>
+          <CardContent className="space-y-2 p-4">
+            <p className="font-semibold">Framework sugerido: {framework}</p>
+            <p className="font-semibold">ORM sugerido: {orm}</p>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
