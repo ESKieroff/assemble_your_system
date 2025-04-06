@@ -30,10 +30,10 @@ export default function QuestionarioPage() {
 
   const handleSubmit = () => {
     localStorage.setItem(
-      "recomendacao",
+      "recommendation",
       JSON.stringify({ respostas, pesos })
     );
-    router.push("/recomendacao/resultado");
+    router.push("/recommendation-result");
   };
 
   return (

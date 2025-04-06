@@ -13,7 +13,7 @@ export default function ResultadoRecomendacao() {
   const [recomendadas, setRecomendadas] = useState<StackResult[]>([]);
 
   useEffect(() => {
-    const raw = localStorage.getItem("recomendacao");
+    const raw = localStorage.getItem("recommendation");
     if (raw) {
       const parsed = JSON.parse(raw);
       setRespostas(parsed.respostas || []);

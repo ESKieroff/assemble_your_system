@@ -18,7 +18,7 @@ export default function Home() {
           Iniciar Questionário
         </Link>
         <Link
-          href="/result"
+          href="/recommendation-result"
           className="text-blue-600 underline hover:text-blue-800 transition"
         >
           Ver última recomendação

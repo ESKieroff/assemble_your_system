@@ -31,11 +31,11 @@ export default function QuestionarioRecomendacao() {
         .map(([name, score]) => ({ name, score }));
 
       localStorage.setItem(
-        "recomendacao",
+        "recommendation",
         JSON.stringify({ respostas: novasRespostas, recomendadas })
       );
 
-      router.push("/resultado");
+      router.push("/result");
     }
   };
 
