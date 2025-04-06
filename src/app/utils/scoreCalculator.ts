@@ -1,8 +1,8 @@
-type StackScore = {
+export type StackScore = {
     id: string;
     nome: string;
     tecnologias: string[];
-    score: Record<string, number>;
+    score: Record<string, number | undefined>;
   };
   
   type Respostas = {

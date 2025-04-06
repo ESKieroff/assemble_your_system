@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { perguntas } from "../../data/questionnaire-data";
+import { perguntas } from "@/data/questionnaire-data";
+import { stacks } from "@/data/stack-data";
+import { calcularMelhorStack } from "@/app/utils/scoreCalculator";
 import { Button } from "../components/ui/Button";
 import { Card, CardContent } from "../components/ui/card";
 import { Slider } from "../components/ui/Slider";
@@ -29,10 +31,20 @@ export default function QuestionarioPage() {
   };
 
   const handleSubmit = () => {
-    localStorage.setItem(
-      "recommendation",
-      JSON.stringify({ respostas, pesos })
-    );
+    const melhor = calcularMelhorStack(stacks, {
+      ...respostas,
+      ...Object.fromEntries(
+        Object.entries(pesos).map(([key, value]) => [key, value.toString()])
+      ),
+    });
+
+    if (melhor) {
+      localStorage.setItem(
+        "recommendation",
+        JSON.stringify(melhor)
+      );
+    }
+
     router.push("/recommendation-result");
   };
 
