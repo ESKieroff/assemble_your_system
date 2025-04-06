@@ -16,7 +16,6 @@ export default function QuestionarioRecomendacao() {
       setRespostas(novasRespostas);
       setEtapa(etapa + 1);
     } else {
-      // Pontuar stacks
       const pontuacoes: Record<string, number> = {};
       stacks.forEach((stack) => {
         let score = 0;

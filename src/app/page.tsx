@@ -1,5 +1,4 @@
 "use client";
-//import MonteSeuSistema from '../app/components/AssembleYourSystem';
 
 import Link from "next/link";
 

@@ -22,7 +22,7 @@ export default function MonteSeuSistema() {
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selected = e.target.value;
     setLanguage(selected as "Java" | "NodeJS" | "PHP" | "Python");
-    // Exemplo de regras de stack:
+
     if (selected === "Node.js") {
       setFramework("NestJS");
       setOrm("Prisma");

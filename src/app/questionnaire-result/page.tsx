@@ -52,7 +52,6 @@ export default function QuestionnaireResultPage() {
   );
 }
 
-// Utilitário para descrever brevemente a stack
 function getStackFitDescription(score: Record<string, number>) {
   const keys = Object.entries(score)
     .filter(([, value]) => value >= 4)

@@ -4,7 +4,6 @@ import { useState } from "react";
 import { perguntas } from "../../data/questionnaire-data";
 import { useComparisonStore } from "../../store/comparisonStore";
 import { Button } from "../components/ui/Button";
-//import { Slider } from "../components/ui/Slider";
 
 export default function QuestionnaireComparatorPage() {
   const [respostas, setRespostas] = useState<{ [key: string]: string | string[] }>({});
@@ -16,7 +15,6 @@ export default function QuestionnaireComparatorPage() {
 
   const handleSubmit = () => {
     setFilters(respostas);
-    // Redirecionamento ou feedback ao usuário aqui, se necessário
   };
 
   return (
