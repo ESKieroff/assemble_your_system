@@ -2,24 +2,27 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { StackScore } from "@/app/utils/scoreCalculator";
-import { Badge } from "../components/ui/Badge";
-import { Card, CardContent } from "../components/ui/card";
+import { StackScore, calcularMelhorStack } from "@/app/utils/scoreCalculator";
+import { stacks } from "@/data/recommendation-data";
+import { Badge } from "@/app/components/ui/Badge";
+import { Card, CardContent } from "@/app/components/ui/card";
 
-export default function RecommendationResultPage() {
+export default function RecommendationPage() {
   const [recommendation, setRecommendation] = useState<StackScore | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const stored = localStorage.getItem("recommendation");
+
     if (stored) {
       try {
         const parsed = JSON.parse(stored);
-        if (parsed && parsed.id && parsed.nome) {
-          setRecommendation(parsed);
-        }
+        const { respostas, pesos } = parsed;
+
+        const melhor = calcularMelhorStack(stacks, respostas, pesos);
+        if (melhor) setRecommendation(melhor);
       } catch (err) {
-        console.error("Erro ao ler recomendação:", err);
+        console.error("Erro ao processar recomendação:", err);
       }
     }
   }, []);
@@ -48,6 +51,7 @@ export default function RecommendationResultPage() {
       <Card>
         <CardContent className="p-6 space-y-4">
           <h2 className="text-xl font-semibold">{recommendation.nome}</h2>
+
           <div className="flex flex-wrap gap-2">
             {recommendation.tecnologias.map((tech) => (
               <Badge key={tech}>{tech}</Badge>

@@ -13,10 +13,10 @@ export default function Header() {
           <Link href="/questionnaire" className="hover:underline">
             Questionário
           </Link>
-          <Link href="/questionnaire-recommendation" className="hover:underline">
+          <Link href="/questionnaire/recommendation" className="hover:underline">
             Recomendação
           </Link>
-          <Link href="/questionnaire-comparator" className="hover:underline">
+          <Link href="/questionnaire/comparator" className="hover:underline">
             Comparador
           </Link>
         </nav>
