@@ -7,7 +7,7 @@ import { Button } from "../../components/ui/Button";
 import { Card, CardContent } from "../../components/ui/card";
 import { Slider } from "../../components/ui/Slider";
 import { useRouter } from "next/navigation";
-import { StackScore } from "@/app/utils/scoreCalculator";
+//import { StackScore } from "@/app/utils/scoreCalculator";
 
 export default function StackComparatorPage() {
   const [respostas, setRespostas] = useState<Record<string, string[]>>({});
@@ -40,13 +40,11 @@ export default function StackComparatorPage() {
   };
 
   const handleSubmit = () => {
-    const stacksSelecionadas: StackScore[] = stacks.filter((s) =>
-      selecionadas.includes(s.id)
-    );
-
-    localStorage.setItem("comparatorResult", JSON.stringify(stacksSelecionadas));
+    localStorage.setItem("comparatorSelections", JSON.stringify(selecionadas));
+    localStorage.setItem("comparatorWeights", JSON.stringify(pesos));
     router.push("/questionnaire/comparator/result");
   };
+  
 
   return (
     <div className="p-6 max-w-5xl mx-auto space-y-6">
